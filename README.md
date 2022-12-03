@@ -12,7 +12,9 @@ This is a simple compare text data
 3. Run the solution
 
 <!-- Photo -->
-<!-- ## Image -->
-<!-- <p align="center">
-    <img src="#" alt="" width="500">
-</p> -->
+## Image
+<br>
+<br>
+<p align="center">
+    <img src="./Images/img-1.jpg" alt="" width="500">
+</p>
