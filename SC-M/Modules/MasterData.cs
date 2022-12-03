@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,10 +9,15 @@ namespace SC_M.Modules
 {
     public class MasterData
     {
+        [DisplayName("ID")]
         public int id { get; set; }
+        [DisplayName("SOFTWARE ON LABEL")]
         public string softwareLabel { get; set; }
+        [DisplayName("SOFTWARE ON ECU")]
         public string softwareECU { get; set; }
+        [DisplayName("Created")]
         public string created_at { get; set; }
+        [DisplayName("Update")]
         public string updated_at { get; set; }
 
         public static List<MasterData> GetAll()
