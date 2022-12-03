@@ -111,5 +111,11 @@ namespace SC_M
             this.ActiveControl = tbLabel;
             tbLabel.Focus();
         }
+
+        private void settingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Setting settingPage = new Setting();
+            settingPage.ShowDialog();
+        }
     }
 }

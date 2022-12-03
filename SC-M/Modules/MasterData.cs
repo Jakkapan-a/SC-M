@@ -25,7 +25,7 @@ namespace SC_M.Modules
         }
 
         // Insert to Db
-        public void Insert()
+        public void Save()
         {
             string sql = "insert into master_data (softwareLabel, softwareECU, created_at, updated_at) values (@softwareLabel, @softwareECU, @created_at, @updated_at)";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
