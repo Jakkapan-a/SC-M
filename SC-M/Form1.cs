@@ -25,7 +25,11 @@ namespace SC_M
             tbName.Select();
             this.ActiveControl = tbName;
             tbName.Focus();
+            toolStripStatusConnection.Text = "";
+            toolStripStatusData.Text = "";
+            toolStripStatusReceive.Text = "";
             LoadHistoryData();
+            timer1.Start();
         }
 
         private void _KeyDown(object sender, KeyEventArgs e)
@@ -63,26 +67,39 @@ namespace SC_M
 
         private void Comparedata()
         {
-            string judge = "";
-            if (tbLabel.Text == tbECU.Text || CheckInMasterData())
+            try
             {
-                judge = "OK";
-            }
-            else
+                if (!serialPort1.IsOpen)
+                {
+                    throw new Exception("Please connect to the controller");
+                }
+
+                string judge = "";
+                if (tbLabel.Text == tbECU.Text || CheckInMasterData())
+                {
+                    judge = "OK";
+                }
+                else
+                {
+                    judge = "NG";
+                }
+                // Save to database
+                HistoryData hd = new HistoryData();
+                hd.name = tbName.Text.Trim();
+                hd.softwareLabel = tbLabel.Text.Trim();
+                hd.softwareECU = tbECU.Text.Trim();
+                hd.judgement = judge;
+                hd.Save();
+                sendSerialData(judge.ToUpper());
+
+                JudgeMentOutoput(judge);
+                LoadHistoryData();
+                // Clear data
+                ClearTextBox();
+            }catch(Exception ex)
             {
-                judge = "NG";
+                MessageBox.Show(ex.Message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            // Save to database
-            HistoryData hd = new HistoryData();
-            hd.name = tbName.Text.Trim();
-            hd.softwareLabel = tbLabel.Text.Trim();
-            hd.softwareECU = tbECU.Text.Trim();
-            hd.judgement = judge;
-            hd.Save();
-            JudgeMentOutoput(judge);
-            LoadHistoryData();
-            // Clear data
-            ClearTextBox();
         }
 
         private bool CheckInMasterData()
@@ -177,6 +194,7 @@ namespace SC_M
             serialPort1.Open();
             toolStripStatusConnection.Text = "Connection: " + PortName + " " + BaudRate;
             toolStripStatusConnection.ForeColor = Color.Green;
+            sendSerialData("Conn");
             return serialPort1.IsOpen;
         }
         private void connectionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -204,12 +222,11 @@ namespace SC_M
             try
             {
                 dataSerialReceived += ReadDataSerial;
+                toolStripStatusReceive.Text = dataSerialReceived.Replace("\r\n", string.Empty);
                 if (dataSerialReceived.Contains(">") && dataSerialReceived.Contains("<"))
                 {
                     string data = dataSerialReceived.Replace("\r\n", string.Empty);
                     dataSerialReceived = string.Empty;
-
-
                     
                 }
                 else if (!dataSerialReceived.Contains(">"))
@@ -219,6 +236,38 @@ namespace SC_M
 
             }
             catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (serialPort1.IsOpen)
+            {
+                toolStripStatusConnection.Text = "Connection: " + PortName + " " + BaudRate;
+            }
+            else
+            {
+                toolStripStatusConnection.Text = "Connection: Disconnected";
+                toolStripStatusConnection.ForeColor = Color.Red;
+                // reconnecttion
+                
+            }
+        }
+
+        public void sendSerialData(string data)
+        {
+            try
+            {
+                toolStripStatusData.Text = String.Empty;
+                toolStripStatusData.Text = "Data: " + data;
+                if (serialPort1.IsOpen)
+                {
+                    serialPort1.Write(">" + data + "<#");
+                }
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
