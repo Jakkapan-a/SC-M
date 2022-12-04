@@ -16,7 +16,7 @@ namespace SC_M
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Setting());
+            Application.Run(new Form1());
         }
     }
 }

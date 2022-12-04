@@ -12,6 +12,7 @@ namespace SC_M.Modules
         public string name { get; set; }
         public string softwareLabel { get; set; }
         public string softwareECU { get; set; }
+        public string judgement { get; set; }
         public string created_at { get; set; }
         public string updated_at { get; set; }
 
@@ -28,15 +29,16 @@ namespace SC_M.Modules
         }
 
         // Insert to Db
-        public void Insert()
+        public void Save()
         {
-            string sql = "insert into history_data (name, softwareLabel, softwareECU, created_at, updated_at) values (@name, @softwareLabel, @softwareECU, @created_at, @updated_at)";
+            string sql = "insert into history_data (name,softwareLabel,softwareECU,judgement,created_at,updated_at) values (@name,@softwareLabel,@softwareECU,@judgement,@created_at,@updated_at)";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("@name", this.name);
-            parameters.Add("@softwareLabel", this.softwareLabel);
-            parameters.Add("@softwareECU", this.softwareECU);
-            parameters.Add("@created_at", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-            parameters.Add("@updated_at", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            parameters.Add("@name", name);
+            parameters.Add("@softwareLabel", softwareLabel);
+            parameters.Add("@softwareECU", softwareECU);
+            parameters.Add("@judgement", judgement);
+            parameters.Add("@created_at", created_at!=String.Empty? DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"): created_at);
+            parameters.Add("@updated_at", updated_at!=String.Empty? DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"): updated_at);
             SQliteDataAccess.InserTnputDB(sql, parameters);
         }
 
@@ -46,9 +48,10 @@ namespace SC_M.Modules
             string sql = "update history_data set name = @name, softwareLabel = @softwareLabel, softwareECU = @softwareECU, updated_at = @updated_at where id = @id";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("@id", this.id);
-            parameters.Add("@name", this.name);
-            parameters.Add("@softwareLabel", this.softwareLabel);
-            parameters.Add("@softwareECU", this.softwareECU);
+            parameters.Add("@name", name);
+            parameters.Add("@softwareLabel", softwareLabel);
+            parameters.Add("@softwareECU", softwareECU);
+            parameters.Add("@judgement", judgement);
             parameters.Add("@updated_at", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             SQliteDataAccess.Update(sql, parameters);
         }

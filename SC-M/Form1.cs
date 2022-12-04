@@ -24,6 +24,7 @@ namespace SC_M
             tbName.Select();
             this.ActiveControl = tbName;
             tbName.Focus();
+            LoadHistoryData();
         }
 
         private void _KeyDown(object sender, KeyEventArgs e)
@@ -64,17 +65,25 @@ namespace SC_M
             string judge = "";
             if (tbLabel.Text == tbECU.Text)
             {
-                JudgeMentOutoput("OK");
+
+                judge = "OK";
             }
             else
             {
 
 
 
-                JudgeMentOutoput("NG");
+                judge = "NG";
             }
             // Save to database
-
+            HistoryData hd = new HistoryData();
+            hd.name = tbName.Text.Trim();
+            hd.softwareLabel = tbLabel.Text.Trim();
+            hd.softwareECU = tbECU.Text.Trim();
+            hd.judgement = judge;
+            hd.Save();
+            JudgeMentOutoput(judge);
+            LoadHistoryData();
             // Clear data
             ClearTextBox();
         }
@@ -112,6 +121,13 @@ namespace SC_M
             tbLabel.Focus();
         }
 
+        private void LoadHistoryData()
+        {
+            
+            string sql = "select * from history_data order by id desc limit 30";
+            var rows = SQliteDataAccess.GetRow<HistoryData>(sql);
+            dataGridView1.DataSource = rows;
+        }
         private void settingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Setting settingPage = new Setting();
