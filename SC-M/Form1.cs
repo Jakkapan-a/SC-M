@@ -43,7 +43,7 @@ namespace SC_M
                     }
                     break;
                 case "tbLabel":
-                    if(e.KeyCode == Keys.Enter)
+                    if (e.KeyCode == Keys.Enter)
                     {
                         tbECU.Select();
                         this.ActiveControl = tbECU;
@@ -59,20 +59,16 @@ namespace SC_M
                     break;
             }
         }
-        
+
         private void Comparedata()
         {
             string judge = "";
-            if (tbLabel.Text == tbECU.Text)
+            if (tbLabel.Text == tbECU.Text || CheckInMasterData())
             {
-
                 judge = "OK";
             }
             else
             {
-
-
-
                 judge = "NG";
             }
             // Save to database
@@ -87,9 +83,24 @@ namespace SC_M
             // Clear data
             ClearTextBox();
         }
-        private void JudgeMentOutoput(string data)
+
+        private bool CheckInMasterData()
+        {
+            string sql = "select * from master_data where softwareLabel = '" + tbLabel.Text.Trim() + "' and softwareECU = '" + tbECU.Text + "'";
+            var row = SQliteDataAccess.GetRow<MasterData>(sql);
+            if (row.Count() > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        private async void JudgeMentOutoput(string data)
         {
             data.ToUpper();
+
+            lbResult.Text = "Loading";
+            lbResult.BackColor = Color.Transparent;
+            await Task.Delay(500);
             switch (data)
             {
                 case "OK":
@@ -115,7 +126,7 @@ namespace SC_M
         {
             tbLabel.Text = "";
             tbECU.Text = "";
-            
+
             tbLabel.Select();
             this.ActiveControl = tbLabel;
             tbLabel.Focus();
@@ -123,10 +134,26 @@ namespace SC_M
 
         private void LoadHistoryData()
         {
-            
             string sql = "select * from history_data order by id desc limit 30";
             var rows = SQliteDataAccess.GetRow<HistoryData>(sql);
-            dataGridView1.DataSource = rows;
+            int num = 1;
+            var list2 = (from r in rows
+                         select new
+                         {
+                             r.id,
+                             No = num++,
+                             Name = r.name,
+                             Software_On_Label = r.softwareLabel,
+                             Software_On_ECU = r.softwareECU,
+                             Judgement = r.judgement,
+                             Created = r.created_at
+                         }).ToList();
+
+            dataGridView1.DataSource = list2;
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[1].Width = (int)(dataGridView1.Width * 0.05);
+            dataGridView1.Columns[dataGridView1.ColumnCount - 1].Width = (int)(dataGridView1.Width * 0.2);
+            dataGridView1.Update();
         }
         private void settingToolStripMenuItem_Click(object sender, EventArgs e)
         {

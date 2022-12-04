@@ -363,8 +363,3 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Database SQLite
-*.mdf
-*.ldf
-*.ndf
-*.db
-*.db3

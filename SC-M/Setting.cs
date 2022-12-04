@@ -30,13 +30,7 @@ namespace SC_M
             {
                 if (tbSoftwareECU.Text != "" && tbSoftwareLabel.Text != "" && (tbSoftwareLabel.Text != master.softwareLabel || tbSoftwareECU.Text != master.softwareECU))
                 {
-                    string sql = "select * from master_data where softwareLabel = '" + tbSoftwareLabel.Text.Trim() + "' and softwareECU = '" + tbSoftwareECU.Text + "'";
-
-                    var row = SQliteDataAccess.GetRow<MasterData>(sql);
-                    if (row.Count() > 0)
-                    {
-                        throw new Exception("Master Data already exists");
-                    }
+                    CheckOldData();
                     MasterData md = new MasterData();
                     md.softwareLabel = tbSoftwareLabel.Text.Trim();
                     md.softwareECU = tbSoftwareECU.Text.Trim();
@@ -53,7 +47,15 @@ namespace SC_M
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
-
+        private void CheckOldData()
+        {
+            string sql = "select * from master_data where softwareLabel = '" + tbSoftwareLabel.Text.Trim() + "' and softwareECU = '" + tbSoftwareECU.Text + "'";
+            var row = SQliteDataAccess.GetRow<MasterData>(sql);
+            if (row.Count() > 0)
+            {
+                throw new Exception("Master Data already exists");
+            }
+        }
         private void LoadData()
         {
             var list = MasterData.GetAll();
@@ -100,6 +102,7 @@ namespace SC_M
         {
             try
             {
+                CheckOldData();
                 MasterData md = new MasterData();
                 md.id = master.id;
                 md.softwareLabel = tbSoftwareLabel.Text.Trim();
@@ -110,7 +113,7 @@ namespace SC_M
             }
             catch(Exception ex)
             {
-                MessageBox.Show("Error " + ex.Message,"Error",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+                MessageBox.Show(ex.Message,"Error",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
             }
         }
 
