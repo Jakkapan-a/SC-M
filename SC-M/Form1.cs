@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -160,5 +161,67 @@ namespace SC_M
             Setting settingPage = new Setting();
             settingPage.ShowDialog();
         }
-    }
+        public string PortName = "";
+        public string BaudRate = "";
+
+        public bool ConnectionSerial(string serialPortName, string baud)
+        {
+            if (serialPort1.IsOpen)
+            {
+                serialPort1.Close();
+            }
+            PortName = serialPortName;
+            BaudRate = baud;
+            serialPort1.PortName = serialPortName;
+            serialPort1.BaudRate = int.Parse(baud);
+            serialPort1.Open();
+            toolStripStatusConnection.Text = "Connection: " + PortName + " " + BaudRate;
+            toolStripStatusConnection.ForeColor = Color.Green;
+            return serialPort1.IsOpen;
+        }
+        private void connectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SerialConnection serial = new SerialConnection(this);
+            serial.ShowDialog();
+        }
+        string ReadDataSerial,dataSerialReceived;
+
+        private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            try
+            {
+                ReadDataSerial = serialPort1.ReadExisting();
+                this.Invoke(new EventHandler(dataReceived));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void dataReceived(object sender, EventArgs e)
+        {
+            try
+            {
+                dataSerialReceived += ReadDataSerial;
+                if (dataSerialReceived.Contains(">") && dataSerialReceived.Contains("<"))
+                {
+                    string data = dataSerialReceived.Replace("\r\n", string.Empty);
+                    dataSerialReceived = string.Empty;
+
+
+                    
+                }
+                else if (!dataSerialReceived.Contains(">"))
+                {
+                    dataSerialReceived = string.Empty;
+                }
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+    } 
 }

@@ -98,6 +98,12 @@
     <Compile Include="Modules\SQliteDataAccess.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerialConnection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SerialConnection.Designer.cs">
+      <DependentUpon>SerialConnection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setting.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +122,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SerialConnection.resx">
+      <DependentUpon>SerialConnection.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Setting.resx">
       <DependentUpon>Setting.cs</DependentUpon>
     </EmbeddedResource>
