@@ -18,7 +18,7 @@ namespace SC_M
         {
             InitializeComponent();
         }
-
+        int count = 0;
         private void Form1_Load(object sender, EventArgs e)
         {
             // Focus on the tbName
@@ -34,35 +34,62 @@ namespace SC_M
 
         private void _KeyDown(object sender, KeyEventArgs e)
         {
-            // Get Name
-            var s = sender as TextBox;
-            string name = s.Name;
-            switch (name)
+            try
             {
-                case "tbName":
-                    if (e.KeyCode == Keys.Enter)
-                    {
-                        tbLabel.Select();
-                        this.ActiveControl = tbLabel;
-                        tbLabel.Focus();
-                    }
-                    break;
-                case "tbLabel":
-                    if (e.KeyCode == Keys.Enter)
-                    {
-                        tbECU.Select();
-                        this.ActiveControl = tbECU;
-                        tbECU.Focus();
-                    }
-                    break;
-                case "tbECU":
-                    if (e.KeyCode == Keys.Enter)
-                    {
-                        Comparedata();
+                var s = sender as TextBox;
+                string name = s.Name;
+                switch (name)
+                {
+                    case "tbName":
+                        if (e.KeyCode == Keys.Enter)
+                        {
+                            tbLabel.Select();
+                            this.ActiveControl = tbLabel;
+                            tbLabel.Focus();
+                        }
+                        break;
+                    case "tbLabel":
+                        if (e.KeyCode == Keys.Enter)
+                        {
+                            tbECU.Select();
+                            this.ActiveControl = tbECU;
+                            tbECU.Focus();
+                        }
+                        break;
+                    case "tbECU":
+                        if (e.KeyCode == Keys.Enter)
+                        {
+                            if(tbName.Text == String.Empty)
+                            {
+                                tbName.Select();
+                                this.ActiveControl = tbName;
+                                tbName.Focus();
+                                throw new Exception("Name is empty");
+                            }
+                            else if (tbLabel.Text == String.Empty)
+                            {
+                                tbLabel.Select();
+                                this.ActiveControl = tbLabel;
+                                tbLabel.Focus();
+                                throw new Exception("Label input is empty");
+                            }
+                            else if (tbECU.Text == String.Empty)
+                            {
+                                tbECU.Select();
+                                this.ActiveControl = tbECU;
+                                tbECU.Focus();
+                                throw new Exception("ECU input is empty");
+                            }
 
-                    }
-                    break;
+                            Comparedata();
+                        }
+                        break;
+                }
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+            
         }
 
         private void Comparedata()
@@ -116,17 +143,23 @@ namespace SC_M
         {
             data.ToUpper();
 
-            lbResult.Text = "Loading";
-            lbResult.BackColor = Color.Transparent;
-            await Task.Delay(500);
+
             switch (data)
             {
                 case "OK":
+                    lbResult.Text = "Loading";
+                    lbResult.BackColor = Color.Transparent;
+                    await Task.Delay(500);
+                    
                     lbResult.Text = "OK";
                     lbResult.BackColor = Color.Green;
                     break;
 
                 case "NG":
+                    lbResult.Text = "Loading";
+                    lbResult.BackColor = Color.Transparent;
+                    await Task.Delay(500);
+                    
                     lbResult.Text = "NG";
                     lbResult.BackColor = Color.Red;
                     break;
@@ -246,6 +279,17 @@ namespace SC_M
             if (serialPort1.IsOpen)
             {
                 toolStripStatusConnection.Text = "Connection: " + PortName + " " + BaudRate;
+
+                if (count > 5000)
+                {
+                    count = 0;
+                }
+                count++;
+
+                if (count > 300)
+                {
+                    JudgeMentOutoput("WAIT");
+                }
             }
             else
             {

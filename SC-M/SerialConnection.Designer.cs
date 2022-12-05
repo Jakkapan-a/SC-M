@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SerialConnection));
             this.comboBoxPort = new System.Windows.Forms.ComboBox();
             this.comboBoxBaud = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -106,6 +107,7 @@
             this.Controls.Add(this.comboBoxBaud);
             this.Controls.Add(this.comboBoxPort);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(454, 216);
             this.MinimumSize = new System.Drawing.Size(454, 216);
             this.Name = "SerialConnection";

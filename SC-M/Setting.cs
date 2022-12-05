@@ -17,7 +17,7 @@ namespace SC_M
             InitializeComponent();
         }
         int dataGridViewSelectedId = 0;
-        MasterData master = new MasterData(); 
+        MasterData master = new MasterData();
 
         private void Setting_Load(object sender, EventArgs e)
         {
@@ -73,7 +73,7 @@ namespace SC_M
             dataGridView1.DataSource = list2;
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Width = (int)(dataGridView1.Width * 0.1);
-            dataGridView1.Columns[dataGridView1.ColumnCount-1].Width= (int)(dataGridView1.Width * 0.3);
+            dataGridView1.Columns[dataGridView1.ColumnCount-1].Width = (int)(dataGridView1.Width * 0.3);
             dataGridView1.Update();
         }
         

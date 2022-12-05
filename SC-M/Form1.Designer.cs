@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -43,13 +44,13 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusConnection = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusData = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusReceive = new System.Windows.Forms.ToolStripStatusLabel();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.settingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.connectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
-            this.toolStripStatusData = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.toolStripStatusReceive = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -236,6 +237,18 @@
             this.toolStripStatusConnection.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusConnection.Text = "toolStripStatusLabel1";
             // 
+            // toolStripStatusData
+            // 
+            this.toolStripStatusData.Name = "toolStripStatusData";
+            this.toolStripStatusData.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusData.Text = "toolStripStatusLabel1";
+            // 
+            // toolStripStatusReceive
+            // 
+            this.toolStripStatusReceive.Name = "toolStripStatusReceive";
+            this.toolStripStatusReceive.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusReceive.Text = "toolStripStatusLabel1";
+            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -246,6 +259,7 @@
             // 
             // settingToolStripMenuItem
             // 
+            this.settingToolStripMenuItem.Image = global::SC_M.Properties.Resources.settings_32;
             this.settingToolStripMenuItem.Name = "settingToolStripMenuItem";
             this.settingToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.settingToolStripMenuItem.Text = "Setting";
@@ -253,6 +267,7 @@
             // 
             // connectionToolStripMenuItem
             // 
+            this.connectionToolStripMenuItem.Image = global::SC_M.Properties.Resources.USB_Connector_32;
             this.connectionToolStripMenuItem.Name = "connectionToolStripMenuItem";
             this.connectionToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.connectionToolStripMenuItem.Text = "Connection";
@@ -262,22 +277,10 @@
             // 
             this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
             // 
-            // toolStripStatusData
-            // 
-            this.toolStripStatusData.Name = "toolStripStatusData";
-            this.toolStripStatusData.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusData.Text = "toolStripStatusLabel1";
-            // 
             // timer1
             // 
             this.timer1.Interval = 2000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // toolStripStatusReceive
-            // 
-            this.toolStripStatusReceive.Name = "toolStripStatusReceive";
-            this.toolStripStatusReceive.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusReceive.Text = "toolStripStatusLabel1";
             // 
             // Form1
             // 
@@ -288,6 +291,7 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(768, 576);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

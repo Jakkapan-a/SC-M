@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Setting));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -142,7 +143,7 @@
             // 
             this.label3.BackColor = System.Drawing.Color.Gray;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(13, 217);
+            this.label3.Location = new System.Drawing.Point(13, 214);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(332, 104);
             this.label3.TabIndex = 2;
@@ -182,7 +183,7 @@
             this.tbSoftwareLabel.Location = new System.Drawing.Point(17, 73);
             this.tbSoftwareLabel.Name = "tbSoftwareLabel";
             this.tbSoftwareLabel.Size = new System.Drawing.Size(328, 31);
-            this.tbSoftwareLabel.TabIndex = 1;
+            this.tbSoftwareLabel.TabIndex = 0;
             // 
             // btChange
             // 
@@ -273,6 +274,7 @@
             this.ClientSize = new System.Drawing.Size(783, 450);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.statusStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(799, 489);
             this.Name = "Setting";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
