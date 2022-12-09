@@ -25,6 +25,7 @@ namespace SC_M
             tbName.Select();
             this.ActiveControl = tbName;
             tbName.Focus();
+
             toolStripStatusConnection.Text = "";
             toolStripStatusData.Text = "";
             toolStripStatusReceive.Text = "";
